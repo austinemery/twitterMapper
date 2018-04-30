@@ -1,5 +1,5 @@
 from twython import Twython, TwythonError
-
+import webbrowser
 # Requires Authentication as of Twitter API v1.1
 
 APP_KEY = 'yHroQigAN9DRz9NGFxQilA1uk'
@@ -30,3 +30,34 @@ for tweet in search_results['statuses']:
 		fileOut.write(tweet['user'], " : ", tweet['coordinates']['coordinates'], '\n')
 
 fileOut.close()
+
+'''
+URL builder
+
+urlStart = "https://www.google.com/maps/dir/?api=1&parameters"
+urlOrigin = "&origin=" + coorArray[0] + "%2C" + coorArray[1]
+
+#handle the waypoints
+
+index = 2
+urlWaypoints = "&waypoints="
+for index < (coorArray.size() - 2)
+	if index != (coorArray.size() - 2):
+		urlWaypoint += coorArray[index] + "%2C"
+		index += 1
+		urlWaypoint += coorArray[index] + "%7C"
+	elif:
+		urlWaypoint += coorArray[index] + "%2C" + coorArray[index+1]
+
+
+urlDestination = "&destination=" + coorArray[coorArray.size()-1] + "%2C" + coorArray[coorArray.size()]
+urlMode = "&travelmode=driving"
+
+urlComplete = urlStart + urlOrigin + urlWaypoint + urlDestination + urlMode
+
+print urlComplete
+
+webbrowser.open(urlComplete, new=1, autoraise=True)
+
+
+'''
