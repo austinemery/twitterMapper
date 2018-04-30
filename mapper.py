@@ -1,6 +1,6 @@
 from twython import Twython, TwythonError
 
-# Requires Authentication as of Twitter API v1.1
+# These long things are needed, do NOT change them
 
 APP_KEY = 'yHroQigAN9DRz9NGFxQilA1uk'
 APP_SECRET = 'QffsFUDwzI4RFerNBTWCJ0gBH5uvq5TCKrJW2HcQzZzKoHLito'
@@ -11,11 +11,13 @@ twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 location = None
 
+searchLocation = input("Where would you like to search?")
+
 fileOut = open('userLocations.txt','w')
 
 #while location == None:
 try:
-    search_results = twitter.search(q = 'Reno', count = 200)
+    search_results = twitter.search(q = searchLocation, count = 50)
 
 except TwythonError as e:
     print e
@@ -25,8 +27,9 @@ for tweet in search_results['statuses']:
     
     if tweet['geo'] != None:
 		print tweet['coordinates']['coordinates'], '\n'
-		location = tweet['place']
+		location = tweet['coordinates']['coordinates']
 
-		fileOut.write(tweet['user'], " : ", tweet['coordinates']['coordinates'], '\n')
+		fileOut.write(tweet['user']['screen_name'].encode('utf-8'))
+		fileOut.write(" : " + ' '.join(str(e) for e in location) + '\n')
 
 fileOut.close()
