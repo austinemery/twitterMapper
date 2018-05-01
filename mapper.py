@@ -12,6 +12,7 @@ twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 location = None
 chosenUser = None
+
 searchLocation = input("Where would you like to search? | Ex:\"san franscisco\" | ")
 print searchLocation
 
@@ -31,13 +32,32 @@ for tweet in search_results['statuses']:
 		print tweet['coordinates']['coordinates'], '\n'
 		location = tweet['coordinates']['coordinates']
 
-		fileOut.write(tweet['user']['screen_name'].encode('utf-8'))
-		fileOut.write(" : " + ' '.join(str(e) for e in location) + '\n')
+		#fileOut.write(tweet['user']['screen_name'].encode('utf-8'))
+		#fileOut.write(" : " + ' '.join(str(e) for e in location) + '\n')
 
 		chosenUser = tweet['user']['screen_name'].encode('utf-8')
 
 
 print "The chosenUser is " , chosenUser , '\n'
+print "\n\n\n"
+
+try:
+    search_results = twitter.search(q = chosenUser, count = 150)
+
+except TwythonError as e:
+    print e
+
+for tweet in search_results['statuses']:
+    print 'Tweet from @%s Date: %s' % (tweet['user']['screen_name'].encode('utf-8'), tweet['created_at'])
+    
+    if tweet['geo'] != None:
+		print tweet['coordinates']['coordinates'], '\n'
+		location = tweet['coordinates']['coordinates']
+
+		fileOut.write(tweet['user']['screen_name'].encode('utf-8'))
+		fileOut.write(" : " + ' '.join(str(e) for e in location) + '\n')
+
+
 fileOut.close()
 
 '''
