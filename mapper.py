@@ -86,10 +86,12 @@ def urlBuilder( coorArray ):
 def listToFormattedStringList(coorArray):
 	stringCoor = []
 
-	for e in coorArray:
-		stringCoor.append(str(e))
+	coorArray = [(tup[1], tup[0]) for tup in coorArray]
 
-	stringCoor = [s.replace(',', '%2C').replace(' ', '').replace('[', '').replace(']', '') for s in stringCoor]
+	for tup in coorArray:
+		stringCoor.append(str(tup))
+
+	stringCoor = [tupString.replace(',', '%2C').replace(' ', '').replace('[', '').replace(']', '') for tupString in stringCoor]
 
 	return stringCoor
 
@@ -117,7 +119,7 @@ def main():
 	#############
 	# User Interaction
 	#############
-	searchLocation = raw_input("Where would you like to search? | Ex: san franscisco | ")
+	searchLocation = raw_input("Where would you like to search?: ")
 	print "Selecting a Random User Located in: " + searchLocation
 
 
