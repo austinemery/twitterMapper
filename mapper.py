@@ -12,7 +12,7 @@ twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 location = None
 chosenUser = None
-
+coorArray = []
 searchLocation = input("Where would you like to search? | Ex:\"san franscisco\" | ")
 print searchLocation
 
@@ -53,7 +53,8 @@ for tweet in search_results['statuses']:
     if tweet['geo'] != None:
 		print tweet['coordinates']['coordinates'], '\n'
 		location = tweet['coordinates']['coordinates']
-
+		coorArray.append(location)
+		
 		fileOut.write(tweet['user']['screen_name'].encode('utf-8'))
 		fileOut.write(" : " + ' '.join(str(e) for e in location) + '\n')
 
