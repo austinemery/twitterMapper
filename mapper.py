@@ -115,7 +115,7 @@ def main():
 	#############
 	# User Interaction
 	#############
-	searchLocation = input("Where would you like to search? | Ex:\"san franscisco\" | ")
+	searchLocation = raw_input("Where would you like to search? | Ex: san franscisco | ")
 	print "Selecting a Random User Located in: " + searchLocation
 
 
