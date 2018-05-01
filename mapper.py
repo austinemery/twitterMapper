@@ -43,7 +43,7 @@ if chosenUser == None:
 	print "No users for your search were found. A default user has been selected.\n"
 
 print "The chosenUser is " , chosenUser , '\n'
-print "\n\n\n"
+print "\n\n"
 
 
 try:
@@ -65,6 +65,8 @@ for tweet in search_results['statuses']:
 
 
 fileOut.close()
+
+print ', '.join(map(str, location))
 
 '''
 URL builder
