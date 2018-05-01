@@ -87,7 +87,7 @@ def listToFormattedStringList(coorArray):
 	for e in coorArray:
 		stringCoor.append(str(e))
 
-	stringCoor = [s.replace(',', '%2C').replace(' ', '') for s in stringCoor]
+	stringCoor = [s.replace(',', '%2C').replace(' ', '').replace('[', '').replace(']', '') for s in stringCoor]
 
 	return stringCoor
 

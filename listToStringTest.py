@@ -16,6 +16,13 @@ def listToFormattedStringList(coorArray):
 	for e in coorArray:
 		stringCoor.append(str(e))
 
-	stringCoor = [s.replace(',', '%2C').replace(' ', '') for s in stringCoor]
+	stringCoor = [s.replace(',', '%2C').replace(' ', '').replace('[', '').replace(']', '') for s in stringCoor]
 
 	return stringCoor
+
+coordinates = [[1, 2], [2, 3], [3, 4]]
+
+blah = listToFormattedStringList(coordinates)
+
+for e in blah:
+	print e
