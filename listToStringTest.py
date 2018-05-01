@@ -13,6 +13,8 @@ def listToFormattedStringList(coorArray):
 
 	stringCoor = []
 
+	coorArray = [(t[1], t[0]) for t in coorArray]
+
 	for e in coorArray:
 		stringCoor.append(str(e))
 
