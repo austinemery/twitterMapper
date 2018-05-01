@@ -6,7 +6,7 @@
 '''
 ###########################################################################################
 #
-# Name: string urlBuilder( coorArray[] )
+# Name: urlBuilder( coorArray )
 # Purpose: To construct the URL that will map the twitter user based on their locations
 # Cases:
 # 		1. There is only one location in the array.
@@ -31,25 +31,28 @@
 
 import webbrowser
 
-urlStart = "https://www.google.com/maps/dir/?api=1&parameters"
-urlOrigin = "&origin=" + coorArray[0]
+def urlBuilder( coorArray ):
+	urlStart = "https://www.google.com/maps/dir/?api=1&parameters"
+	urlOrigin = "&origin=" + coorArray[0]
 
-#handle the waypoints
-urlWaypoints = "&waypoints="
-for index in range(len(coorArray)):
-	if index == 0 or index == (len(coorArray)-1):
-		continue
-	elif index != (len(coorArray)  - 2):
-		urlWaypoints += coorArray[index] 
-		urlWaypoints += "%7C"
-	else:
-		urlWaypoints += coorArray[index]
+	#handle the waypoints
+	urlWaypoints = "&waypoints="
+	for index in range(len(coorArray)):
+		if index == 0 or index == (len(coorArray)-1):
+			continue
+		elif index != (len(coorArray)  - 2):
+			urlWaypoints += coorArray[index] 
+			urlWaypoints += "%7C"
+		else:
+			urlWaypoints += coorArray[index]
 
 
-urlDestination = "&destination=" + coorArray[index]
+	urlDestination = "&destination=" + coorArray[index]
 
-urlMode = "&travelmode=driving"
+	urlMode = "&travelmode=driving"
 
-urlComplete = urlStart + urlOrigin + urlWaypoints + urlDestination + urlMode
+	urlComplete = urlStart + urlOrigin + urlWaypoints + urlDestination + urlMode
 
-webbrowser.open(urlComplete, new=1, autoraise=True)
+	return urlComplete
+
+#webbrowser.open(urlComplete, new=1, autoraise=True)

@@ -2,100 +2,132 @@ from twython import Twython, TwythonError
 import webbrowser
 # Requires Authentication as of Twitter API v1.1
 
+###########################################################################################
+#
+# Name: urlBuilder( coorArray )
+# Purpose: To construct the URL that will map the twitter user based on their locations
+# Cases:
+# 		1. There is only one location in the array.
+#			In this case the map will open with only one point on the map, with the one
+#			location being the origin and the destination.
+#		2. There are two locations in the array.
+#			In this case the map will open with the first point being the origin and
+#			the last point being the destination.
+#		3. The are more than two locations in the array.
+#			In this case the map will open with the first point being the origin,
+#			the last point being the destination, and all other points being Waypoints.
+#
+#
+# Notes:
+#		1. Amount of Waypoints allowed:
+#			-3 if on mobile
+#			-9 otherwise
+#			Therefore we will assume that the attack is being run from a computer
+#			and will only include 11 location points in an array.  
+#
+###########################################################################################
+def urlBuilder( coorArray ):
+	urlStart = "https://www.google.com/maps/dir/?api=1&parameters"
+	urlOrigin = "&origin=" + coorArray[0]
 
-APP_KEY = 'yHroQigAN9DRz9NGFxQilA1uk'
-APP_SECRET = 'QffsFUDwzI4RFerNBTWCJ0gBH5uvq5TCKrJW2HcQzZzKoHLito'
-OAUTH_TOKEN =  '981718285379977216-BcJhxpzS5HEwcXf8D6QWWTliiDmFv6d'
-OAUTH_TOKEN_SECRET = 'ERS7aq8DYOkoh0JsG5JNvE1ulAo3msTtuq2UQ8sc4DzXR'
-
-twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
-defaultUser = "tmj_NV_EDU"
-location = None
-chosenUser = None
-coorArray = []
-searchLocation = input("Where would you like to search? | Ex:\"san franscisco\" | ")
-print searchLocation
-
-fileOut = open('userLocations.txt','w')
-
-#while location == None:
-try:
-    search_results = twitter.search(q = searchLocation, count = 150)
-
-except TwythonError as e:
-    print e
-
-for tweet in search_results['statuses']:
-    print 'Tweet from @%s Date: %s' % (tweet['user']['screen_name'].encode('utf-8'), tweet['created_at'])
-    
-    if tweet['geo'] != None:
-		print tweet['coordinates']['coordinates'], '\n'
-		location = tweet['coordinates']['coordinates']
-
-		#fileOut.write(tweet['user']['screen_name'].encode('utf-8'))
-		#fileOut.write(" : " + ' '.join(str(e) for e in location) + '\n')
-
-		chosenUser = tweet['user']['screen_name'].encode('utf-8')
-
-
-if chosenUser == None:
-	chosenUser = defaultUser
-	print "No users for your search were found. A default user has been selected.\n"
-
-print "The chosenUser is " , chosenUser , '\n'
-print "\n\n"
+	#handle the waypoints
+	urlWaypoints = "&waypoints="
+	for index in range(len(coorArray)):
+		if index == 0 or index == (len(coorArray)-1):
+			continue
+		elif index != (len(coorArray)  - 2):
+			urlWaypoints += coorArray[index] 
+			urlWaypoints += "%7C"
+		else:
+			urlWaypoints += coorArray[index]
 
 
-try:
-    search_results = twitter.search(q = chosenUser, count = 150)
+	urlDestination = "&destination=" + coorArray[index]
 
-except TwythonError as e:
-    print e
+	urlMode = "&travelmode=driving"
 
-for tweet in search_results['statuses']:
-    print 'Tweet from @%s Date: %s' % (tweet['user']['screen_name'].encode('utf-8'), tweet['created_at'])
-    
-    if tweet['geo'] != None:
-		print tweet['coordinates']['coordinates'], '\n'
-		location = tweet['coordinates']['coordinates']
-		coorArray.append(location)
-		
-		fileOut.write(tweet['user']['screen_name'].encode('utf-8'))
-		fileOut.write(" : " + ' '.join(str(e) for e in location) + '\n')
+	urlComplete = urlStart + urlOrigin + urlWaypoints + urlDestination + urlMode
+
+	return urlComplete
 
 
-fileOut.close()
+def main():
 
-print ', '.join(map(str, location))
+	###############
+	# API Relevant 
+	###############
+	APP_KEY = 'yHroQigAN9DRz9NGFxQilA1uk'
+	APP_SECRET = 'QffsFUDwzI4RFerNBTWCJ0gBH5uvq5TCKrJW2HcQzZzKoHLito'
+	OAUTH_TOKEN =  '981718285379977216-BcJhxpzS5HEwcXf8D6QWWTliiDmFv6d'
+	OAUTH_TOKEN_SECRET = 'ERS7aq8DYOkoh0JsG5JNvE1ulAo3msTtuq2UQ8sc4DzXR'
+	twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
-'''
-URL builder
+	##############
+	# Variables
+	##############
+	defaultUser = "tmj_NV_EDU"
+	location = None
+	chosenUser = None
+	coorArray = []
+	
 
-urlStart = "https://www.google.com/maps/dir/?api=1&parameters"
-urlOrigin = "&origin=" + coorArray[0] + "%2C" + coorArray[1]
+	#############
+	# User Interaction
+	#############
+	searchLocation = input("Where would you like to search? | Ex:\"san franscisco\" | ")
+	print searchLocation
 
-#handle the waypoints
+	fileOut = open('userLocations.txt','w')
 
-index = 2
-urlWaypoints = "&waypoints="
-for index < (coorArray.size() - 2)
-	if index != (coorArray.size() - 2):
-		urlWaypoint += coorArray[index] + "%2C"
-		index += 1
-		urlWaypoint += coorArray[index] + "%7C"
-	elif:
-		urlWaypoint += coorArray[index] + "%2C" + coorArray[index+1]
+	#while location == None:
+	try:
+	    search_results = twitter.search(q = searchLocation, count = 150)
+
+	except TwythonError as e:
+	    print e
+
+	for tweet in search_results['statuses']:
+	    print 'Tweet from @%s Date: %s' % (tweet['user']['screen_name'].encode('utf-8'), tweet['created_at'])
+	    
+	    if tweet['geo'] != None:
+			print tweet['coordinates']['coordinates'], '\n'
+			location = tweet['coordinates']['coordinates']
+
+			#fileOut.write(tweet['user']['screen_name'].encode('utf-8'))
+			#fileOut.write(" : " + ' '.join(str(e) for e in location) + '\n')
+
+			chosenUser = tweet['user']['screen_name'].encode('utf-8')
 
 
-urlDestination = "&destination=" + coorArray[coorArray.size()-1] + "%2C" + coorArray[coorArray.size()]
-urlMode = "&travelmode=driving"
+	if chosenUser == None:
+		chosenUser = defaultUser
+		print "No users for your search were found. A default user has been selected.\n"
 
-urlComplete = urlStart + urlOrigin + urlWaypoint + urlDestination + urlMode
+	print "The chosenUser is " , chosenUser , '\n'
+	print "\n\n"
 
-print urlComplete
 
-webbrowser.open(urlComplete, new=1, autoraise=True)
+	try:
+	    search_results = twitter.search(q = chosenUser, count = 150)
 
-'''
+	except TwythonError as e:
+	    print e
 
-#https://www.google.com/maps/dir/?api=1&origin=-33.868882%2C151.197360&waypoints=-33.871420%2C151.196168%7C-33.875117%2C151.199159&destination=-33.872256%2C151.204530&travelmode=driving
+	for tweet in search_results['statuses']:
+	    print 'Tweet from @%s Date: %s' % (tweet['user']['screen_name'].encode('utf-8'), tweet['created_at'])
+	    
+	    if tweet['geo'] != None:
+			print tweet['coordinates']['coordinates'], '\n'
+			location = tweet['coordinates']['coordinates']
+			coorArray.append(location)
+			
+			fileOut.write(tweet['user']['screen_name'].encode('utf-8'))
+			fileOut.write(" : " + ' '.join(str(e) for e in location) + '\n')
+
+
+	fileOut.close()
+
+	print ', '.join(map(str, location))
+
+if __name__ == "__main__":
+	main()
