@@ -50,6 +50,24 @@ def urlBuilder( coorArray ):
 
 	return urlComplete
 
+###########################################################################################
+#
+# Name: listToFormattedStringList(coorArray)
+# Purpose: To convert each element inside coorArray to a string and to format it as 'aNumber%2CaNumer'
+#
+# Notes:   
+#
+###########################################################################################
+
+def listToFormattedStringList(coorArray):
+	stringCoor = []
+
+	for e in coorArray:
+		stringCoor.append(str(e))
+
+	stringCoor = [s.replace(',', '%2C').replace(' ', '') for s in stringCoor]
+
+	return stringCoor
 
 def main():
 
@@ -79,6 +97,9 @@ def main():
 
 	fileOut = open('userLocations.txt','w')
 
+	#############
+	# Search for a user in that area.
+	#############
 	#while location == None:
 	try:
 	    search_results = twitter.search(q = searchLocation, count = 150)
@@ -98,7 +119,9 @@ def main():
 
 			chosenUser = tweet['user']['screen_name'].encode('utf-8')
 
-
+	#############
+	# Determine if a user was found, if not, set a default user
+	#############
 	if chosenUser == None:
 		chosenUser = defaultUser
 		print "No users for your search were found. A default user has been selected.\n"
@@ -106,7 +129,9 @@ def main():
 	print "The chosenUser is " , chosenUser , '\n'
 	print "\n\n"
 
-
+	#############
+	# Search the user for information
+	#############
 	try:
 	    search_results = twitter.search(q = chosenUser, count = 150)
 
@@ -124,10 +149,17 @@ def main():
 			fileOut.write(tweet['user']['screen_name'].encode('utf-8'))
 			fileOut.write(" : " + ' '.join(str(e) for e in location) + '\n')
 
+	coorArray = listToFormattedStringList(coorArray)
+
+	url = urlBuilder(coorArray)
+
+	webbrowser.open(url, new=1, autoraise=True)
 
 	fileOut.close()
 
 	print ', '.join(map(str, location))
+
+	return
 
 if __name__ == "__main__":
 	main()
