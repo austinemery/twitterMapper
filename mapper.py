@@ -98,5 +98,4 @@ webbrowser.open(urlComplete, new=1, autoraise=True)
 
 '''
 
-
 #https://www.google.com/maps/dir/?api=1&origin=-33.868882%2C151.197360&waypoints=-33.871420%2C151.196168%7C-33.875117%2C151.199159&destination=-33.872256%2C151.204530&travelmode=driving
