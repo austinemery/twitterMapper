@@ -58,8 +58,10 @@ for tweet in search_results['statuses']:
     if tweet['geo'] != None:
 		print tweet['coordinates']['coordinates'], '\n'
 		location = tweet['coordinates']['coordinates']
-		coorArray.append(location)
-		
+		if len(coorArray) <= 11:
+			if  coorArray.count(location) == 0:
+				coorArray.append(location)
+
 		fileOut.write(tweet['user']['screen_name'].encode('utf-8'))
 		fileOut.write(" : " + ' '.join(str(e) for e in location) + '\n')
 
