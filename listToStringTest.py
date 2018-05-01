@@ -1,15 +1,21 @@
-coordinates = [[33, 22], [44, 66], [77, 88]]
 
-stringCoor = []
+###########################################################################################
+#
+# Name: listToFormattedStringList(coorArray)
+# Purpose: To convert each element inside coorArray to a string and to format it as 'aNumber%2CaNumer'
+#
+# Notes:
+#		1. The   
+#
+###########################################################################################
 
-for e in coordinates:
-	stringCoor.append(str(e))
+def listToFormattedStringList(coorArray):
 
-for test in stringCoor:
-	print test
+	stringCoor = []
 
+	for e in coorArray:
+		stringCoor.append(str(e))
 
-stringCoor = [s.replace(',', '%2C').replace(' ', '') for s in stringCoor]
+	stringCoor = [s.replace(',', '%2C').replace(' ', '') for s in stringCoor]
 
-for test in stringCoor:
-	print test
+	return stringCoor
