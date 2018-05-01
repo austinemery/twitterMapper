@@ -69,6 +69,8 @@ def urlBuilder( coorArray ):
 
 	urlComplete = urlStart + urlOrigin + urlWaypoints + urlDestination + urlMode
 
+	print urlComplete
+
 	return urlComplete
 
 ###########################################################################################
