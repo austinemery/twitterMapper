@@ -38,8 +38,13 @@ for tweet in search_results['statuses']:
 		chosenUser = tweet['user']['screen_name'].encode('utf-8')
 
 
+if chosenUser == None:
+	chosenUser = defaultUser
+	print "No users for your search were found. A default user has been selected.\n"
+
 print "The chosenUser is " , chosenUser , '\n'
 print "\n\n\n"
+
 
 try:
     search_results = twitter.search(q = chosenUser, count = 150)
