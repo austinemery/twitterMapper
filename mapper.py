@@ -145,7 +145,7 @@ def main():
 		chosenUser = defaultUser
 		print "No users for your search were found. A default user has been selected."
 
-	print "The chosenUser is " , chosenUser , '\n'
+	print "The chosenUser is " , chosenUser
 	print "Searching their most recent tweets for locations."
 
 	#############
@@ -173,11 +173,13 @@ def main():
 	url = urlBuilder(coorArray)
 
 	
-	print "A webbrowswer is about to open, showing the map of the selected user.\n"
+	print "A webbrowswer is about to open, showing the map of the selected user."
+	print "***"
+	print "***"
 	while inputKey != 1:
 		inputKey = input("Enter 1 to continue: ")
 
-	print "Thank you."	
+	print "Thank you. Please wait while the webbrowswer opens."	
 	webbrowser.open(url, new=1, autoraise=True)
 
 	return
