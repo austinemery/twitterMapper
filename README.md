@@ -1,7 +1,7 @@
 # Twitter Stalker
 Final Project for CS445. Using Tweets to map out locations.
 
-### Installs:
+### Installs (more detailed instructions are in the report):
 
 #### Twython
 ```
