@@ -5,10 +5,13 @@ Final Project for CS445. Using Tweets to map out locations.
 
 #### Twython
 ```
-pip install Twython
+sudo pip install Twython
 ```
 
 #### Python 2.7 (if needed)
+```
+sudo apt-get install python
+```
 
 ### To Run:
 
